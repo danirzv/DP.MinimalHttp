@@ -1,0 +1,11 @@
+bin/
+obj/
+/packages/
+riderModule.iml
+/_ReSharper.Caches/
+.idea/
+venv/
+sql/
+.vscode/
+.config/dotnet-tools.json
+.Development.json
