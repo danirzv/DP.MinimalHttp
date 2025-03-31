@@ -9,7 +9,7 @@
         <PackageId>DP.MinimalHttp</PackageId>
         <Title>DP.MinimalHttp</Title>
         <IsPackable>true</IsPackable>
-        <Version>1.0.0</Version>
+        <Version>1.1.0-alpha</Version>
         <Authors>DaniRzV</Authors>
         <Company>DP</Company>
         <PackageDescription>
@@ -18,9 +18,11 @@
             zero boilerplate configuration, and built-in resilience.
             Stop wrestling with HttpClient, write less do more!
         </PackageDescription>
-        <PackageIcon>logo.256x256.png</PackageIcon>
         <RepositoryUrl>https://github.com/danirzv/DP.MinimalHttp.git</RepositoryUrl>
         <PackageProjectUrl>https://github.com/danirzv/DP.MinimalHttp</PackageProjectUrl>
+        <PackageLicenseFile>LICENSE</PackageLicenseFile>
+        <PackageIcon>logo.256x256.png</PackageIcon>
+        <PackageReadmeFile>README.md</PackageReadmeFile>
     </PropertyGroup>
 
 
