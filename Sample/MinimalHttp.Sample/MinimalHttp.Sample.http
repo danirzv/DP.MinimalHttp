@@ -1,0 +1,14 @@
+@MinimalHttpSample_HostAddress = http://localhost:5102
+
+GET {{MinimalHttpSample_HostAddress}}/successful/
+Accept: application/json
+
+###
+
+GET {{MinimalHttpSample_HostAddress}}/interesting/
+Accept: application/json
+
+###
+
+GET {{MinimalHttpSample_HostAddress}}/uninteresting/
+Accept: application/json
