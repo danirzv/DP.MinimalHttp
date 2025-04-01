@@ -1,6 +1,6 @@
 ﻿
 
-# ![alt text](https://raw.githubusercontent.com/danirzv/DP.MinimalHttp/main/docs/logo.32x32.png).MinimalHttp
+# DP.MinimalHttp
 🚀 *The simplest way to use `HttpClient` in .NET — with automatic JSON deserialization and zero boilerplate.*
 
 [![NuGet](https://img.shields.io/nuget/v/DP.MinimalHttp.svg)](https://www.nuget.org/packages/DP.MinimalHttp)
