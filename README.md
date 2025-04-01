@@ -59,16 +59,19 @@
     public class TargetClient
     {
         private readonly HttpClient _client;
-        public TargetClient(HttpClient client)
+        private readonly Ilogger _logger;
+        public TargetClient(ILogger<TargetClient> logger, HttpClient client)
         {
             _client = client;
+            _logger = logger;
         }
 
         public Task<TargetSuccessModel> CoolMethodCall()
         {
             try
             {
-                TargetSuccessModel response = await _client.SendAsync<TargetSuccessModel, TargetErrorModel>();
+                var request = new HttpRequestMessage(HttpMethod.Get, "/Bar");
+                TargetSuccessModel response = await _client.SendAsync<TargetSuccessModel, TargetErrorModel>(request, _logger);
 
                 return response;
             }
