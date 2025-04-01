@@ -11,6 +11,74 @@
 - ✅ **Automatic JSON deserialization** into `SuccessModel` or `ErrorModel`.
 - ✅ **Minimal API**: Just 2-3 methods to handle all HTTP requests.
 
-## Install
+## Getting Started
+
+1.Install `DP.MinimalHttp` using cli or NuGet plugin of your IDE
+
 ```bash
-dotnet add package DP.MinimalHttp
+  dotnet add package DP.MinimalHttp
+```
+
+2.Register your HttpClientOptions and HttpClient
+
+#### appsettings.json
+```json
+{
+  "TargetHttpClientOptions": {
+    "BaseUri": "www.Foo.com",
+    "HttpClientLoggingMode": 3, // *Optional* 3 means Request and Response will be logged
+    "HealthCheckPath": "/healthz", // *Optional*
+    "Timeout": "00:01:00", // *Optional*
+    "CertificateThumbprint": "b8bb81876833873942045a8df8f06219e00602ebcb4384c7abc24f18379c87f5", // *Optional* IgnoreCertificate will surpress this option 
+    "IgnoreCertificate": true // *Optional*
+  }
+}
+```
+
+#### TargetHttpClientOptions.cs
+```csharp
+    public class TargetHttpClientOptions : HttpClientOptions
+    {}
+```
+
+#### Program.cs
+```csharp
+    // Setup TargetHttpClientOptions from your appsettings.json 
+    services.Configure<TargetHttpClientOptions>(
+        configuration.GetSection("TargetHttpClientOptions")
+    );
+
+    // Register an HttpClient for class 'TargetClient'
+    services.AddHttpClient<TargetClient, TargetHttpClientOptions>();
+```
+
+3.You are good to go! use your httpClient!
+
+#### TargetClient.cs
+```csharp
+    public class TargetClient
+    {
+        private readonly HttpClient _client;
+        public TargetClient(HttpClient client)
+        {
+            _client = client;
+        }
+
+        public Task<TargetSuccessModel> CoolMethodCall()
+        {
+            try
+            {
+                TargetSuccessModel response = await _client.SendAsync<TargetSuccessModel, TargetErrorModel>();
+
+                return response;
+            }
+            catch (ExternalProviderException<TargetErrorModel> ex)
+            {
+                // anything you like to do with target failure 
+                // you have access to deserialized TargetErrorModel from ex.ErrorModel
+
+                throw;
+            }
+        }
+    }
+```
