@@ -4,11 +4,13 @@
         <TargetFramework>net9.0</TargetFramework>
         <Nullable>enable</Nullable>
         <ImplicitUsings>enable</ImplicitUsings>
+        <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+        <GenerateTargetFrameworkAttribute>false</GenerateTargetFrameworkAttribute>
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="DP.MinimalHttp" Version="1.3.0" />
-        <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="9.0.2"/>
+        <PackageReference Include="DP.MinimalHttp" Version="1.4.0" />
+        <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="9.0.4" />
     </ItemGroup>
 
 </Project>

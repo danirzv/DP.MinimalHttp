@@ -2,12 +2,19 @@
 
 namespace MinimalHttp;
 
-public partial class HttpClientLogger(
-    HttpMessageHandler innerHandler,
-    HttpClientLoggerOptions loggerOptions,
-    ILogger<HttpClientLogger> logger)
-    : DelegatingHandler(innerHandler)
+public partial class HttpClientLogger : DelegatingHandler
 {
+    private readonly HttpClientLoggerOptions _loggerOptions;
+    private readonly ILogger<HttpClientLogger> _logger;
+
+    public HttpClientLogger(HttpMessageHandler innerHandler,
+        HttpClientLoggerOptions loggerOptions,
+        ILogger<HttpClientLogger> logger) : base(innerHandler)
+    {
+        _loggerOptions = loggerOptions;
+        _logger = logger;
+    }
+
     protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
     {
 
@@ -17,14 +24,14 @@ public partial class HttpClientLogger(
 
         try
         {
-            if (loggerOptions.RequestBody && request.Content != null)
+            if (_loggerOptions.RequestBody && request.Content != null)
             {
                 requestBody = await request.Content.ReadAsStringAsync(cancellationToken);
             }
 
             response = await base.SendAsync(request, cancellationToken);
 
-            if (loggerOptions.ResponseBody && response.Content != null)
+            if (_loggerOptions.ResponseBody && response.Content != null)
             {
                 responseBody = await response.Content.ReadAsStringAsync(cancellationToken);
             }
@@ -33,7 +40,7 @@ public partial class HttpClientLogger(
         }
         finally
         {
-            LogHttpCall(logger, request.RequestUri, requestBody, (int?)response?.StatusCode, response?.ReasonPhrase, responseBody);
+            LogHttpCall(_logger, request.RequestUri, requestBody, (int?)response?.StatusCode, response?.ReasonPhrase, responseBody);
         }
     }
     
