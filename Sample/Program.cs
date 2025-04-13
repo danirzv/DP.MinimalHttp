@@ -10,9 +10,9 @@ services.AddHttpClient<TargetClient, TargetHttpClientOptions>();
 
 var app = builder.Build();
 
-app.MapGet("/successful", (TargetClient targetClient) => targetClient.CoolMethodCall("/v3/309893fe-0097-43da-9a83-448ff2eafb2e"));
-app.MapGet("/interesting", (TargetClient targetClient) => targetClient.CoolMethodCall("/v3/0ff48ca6-a1bf-4e7d-90b2-52201ecfc6f2"));
-app.MapGet("/uninteresting", (TargetClient targetClient) => targetClient.CoolMethodCall("/v3/ced34a23-bfe4-4e82-9f6a-3401377d6418"));
+app.MapGet("/successful", (TargetClient targetClient) => targetClient.CoolMethodCall("/v3/83dc5d78-9e6e-4edd-916a-69d8fc227813"));
+app.MapGet("/interesting", (TargetClient targetClient) => targetClient.CoolMethodCall("/v3/7835422b-622d-4ff5-a0d6-4115d7156baf"));
+app.MapGet("/uninteresting", (TargetClient targetClient) => targetClient.CoolMethodCall("/v3/c191b468-defe-459a-a6a3-237a6464c58d"));
 
 app.Run();
 
