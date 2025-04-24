@@ -85,3 +85,63 @@
         }
     }
 ```
+
+## More Features
+
+#### Creating request with query parameters:
+```csharp
+    var parameters = new Dictionary<string, string>
+    {
+        ["param1"] = "ABCD",
+        ["param2"] = "2",
+        ["param3"] = "true",
+    };
+    var relativeUri = new Uri("service/address", UriKind.Relative);
+    var uri = MinimalHttpHelpers.GenerateQueryParamUri(httpClient.BaseAddress, relativeUri, parameters);
+    
+    //Result: <BaseAddress>/service/address?param1=ABCD&param2=2&param3=true
+
+```
+
+#### Creating request with Json body:
+
+```csharp
+    var model = new 
+    {
+        param1 = "ABCD",
+        param2 = 2,
+        param3 = true
+    };
+
+    var httpRequest = new HttpRequestMessage();
+
+    // Adds JsonContent to body of request
+    httpRequest.AddJsonContent(model);
+```
+
+#### More complex scenarios (AddJsonContent vs AddJsonContentFreeStyle):
+
+```csharp
+    public class ParentType
+    {
+        public string A { get; set; }
+    }
+
+    public class ChildType : ParentType
+    {
+        public string B { get; set; }
+    }
+
+    public Task MethodA(ParentType model)
+    {
+        var httpRequest = new HttpRequestMessage();
+
+        // lets assume passed model to this method is a 'ChildType' which is also a 'ParentType' 
+
+        // As model is ParentType serialized model will have just parameter 'A'
+        httpRequest.AddJsonContent(model);
+
+        // As model is actually a 'ChildType' serialized model will have both parameters 'A' and 'B'
+        httpRequest.AddJsonContentFreeStyle(model);
+    }
+```
