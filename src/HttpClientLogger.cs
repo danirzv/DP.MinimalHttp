@@ -2,11 +2,17 @@
 
 namespace MinimalHttp;
 
+/// <summary>
+/// A <see cref="DelegatingHandler"/> which can handle logging needs of Http calls
+/// </summary>
 public partial class HttpClientLogger : DelegatingHandler
 {
     private readonly HttpClientLoggerOptions _loggerOptions;
     private readonly ILogger<HttpClientLogger> _logger;
 
+    /// <summary>
+    /// Default constructor 
+    /// </summary>
     public HttpClientLogger(HttpMessageHandler innerHandler,
         HttpClientLoggerOptions loggerOptions,
         ILogger<HttpClientLogger> logger) : base(innerHandler)
@@ -15,6 +21,9 @@ public partial class HttpClientLogger : DelegatingHandler
         _logger = logger;
     }
 
+    /// <summary>
+    /// Overriden <see cref="SendAsync"/> which is responsible for logging request and response and wrapping inner <see cref="HttpMessageHandler"/>
+    /// </summary>
     protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
     {
 
@@ -43,7 +52,10 @@ public partial class HttpClientLogger : DelegatingHandler
             LogHttpCall(_logger, request.RequestUri, requestBody, (int?)response?.StatusCode, response?.ReasonPhrase, responseBody);
         }
     }
-    
+
+    /// <summary>
+    /// This method is used only for <see cref="LoggerMessage"/> to do logging more optimized.
+    /// </summary>
     [LoggerMessage(
         Message = "Calling Http request '{requestUri}' with body : '{requestBody}'. Getting status code '{statusCode}', ReasonPhrase: '{reasonPhrase}' with response body '{responseBody}'",
         Level = LogLevel.Information,
