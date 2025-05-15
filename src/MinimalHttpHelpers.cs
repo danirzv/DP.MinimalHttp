@@ -3,6 +3,9 @@ using System.Web;
 
 namespace MinimalHttp;
 
+/// <summary>
+/// Contains Helpers which could help to handel httpMessage needs
+/// </summary>
 public static class MinimalHttpHelpers
 {
     /// <summary>

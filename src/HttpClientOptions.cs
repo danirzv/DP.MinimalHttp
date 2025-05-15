@@ -70,7 +70,23 @@ public abstract class HttpClientOptions
 [Flags]
 public enum HttpClientLoggingMode
 {
+    /// <summary>
+    /// Won't log sending request or response body
+    /// </summary>
     None = 0,
+
+    /// <summary>
+    /// just logs sending request body
+    /// </summary>
     RequestBody = 1,
-    ResponseBody = 2
+
+    /// <summary>
+    /// just logs received response body
+    /// </summary>
+    ResponseBody = 2,
+
+    /// <summary>
+    /// logs both request and response body
+    /// </summary>
+    RequestAndResponseBody = 3,
 }

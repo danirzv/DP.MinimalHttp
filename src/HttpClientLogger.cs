@@ -5,7 +5,7 @@ namespace MinimalHttp;
 /// <summary>
 /// A <see cref="DelegatingHandler"/> which can handle logging needs of Http calls
 /// </summary>
-public partial class HttpClientLogger : DelegatingHandler
+internal partial class HttpClientLogger : DelegatingHandler
 {
     private readonly HttpClientLoggerOptions _loggerOptions;
     private readonly ILogger<HttpClientLogger> _logger;

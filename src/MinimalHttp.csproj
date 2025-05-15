@@ -9,7 +9,7 @@
         <PackageId>DP.MinimalHttp</PackageId>
         <Title>DP.MinimalHttp</Title>
         <IsPackable>true</IsPackable>
-        <Version>1.5.0</Version>
+        <Version>1.5.1</Version>
         <Authors>DaniRzV</Authors>
         <Company>DP</Company>
         <PackageDescription>

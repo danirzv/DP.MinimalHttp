@@ -4,6 +4,9 @@ using MinimalHttp;
 
 namespace Microsoft.Extensions.DependencyInjection;
 
+/// <summary>
+/// Contains methods to setup functionalities
+/// </summary>
 public static class MinimalHttpExtensionMethods
 {
     /// <summary>
@@ -34,7 +37,7 @@ public static class MinimalHttpExtensionMethods
                 realHandler.UseProxy = false;
                 realHandler.AllowAutoRedirect = false;
                 realHandler.UseCookies = false;
-                realHandler.ServerCertificateCustomValidationCallback = options.CertificateValidationCallback;
+                realHandler.ServerCertificateCustomValidationCallback = options.CertificateValidationCallback!;
 
                 var loggingWrapper = new HttpClientLogger(
                     realHandler,

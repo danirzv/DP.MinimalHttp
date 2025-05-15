@@ -6,6 +6,9 @@ using Microsoft.Extensions.Logging;
 
 namespace MinimalHttp;
 
+/// <summary>
+/// Contains Helpers on top of <see cref="HttpClient"/>
+/// </summary>
 public static class HttpClientExtensions
 {
     /// <summary>
@@ -22,6 +25,7 @@ public static class HttpClientExtensions
     /// <param name="logger">ILogger</param>
     /// <param name="cancellationToken">cancellationToken</param>
     /// <param name="customSuccessfulResultIndicator">Function which can define a request was successful regardless of statusCode 2xx</param>
+    /// <param name="customJsonSerializerOptions">If you want to set an <see cref="JsonSerializerOptions"/> without changing default using JsonSerializerOptions in <see cref="HttpClientExtensions"/></param>
     /// <typeparam name="TResponse">Successful response model</typeparam>
     /// <typeparam name="TErrorModel">Unsuccessful response model</typeparam>
     /// <exception cref="ExternalProviderException{TErrorModel}">in case of unsuccessful response</exception>
@@ -62,6 +66,7 @@ public static class HttpClientExtensions
     /// <param name="logger">ILogger</param>
     /// <param name="cancellationToken">cancellationToken</param>
     /// <param name="customSuccessfulResultIndicator">Function which can define a request was successful regardless of statusCode 2xx</param>
+    /// <param name="customJsonSerializerOptions">If you want to set an <see cref="JsonSerializerOptions"/> without changing default using JsonSerializerOptions in <see cref="HttpClientExtensions"/></param>
     /// <typeparam name="TErrorModel">Unsuccessful response model</typeparam>
     /// <exception cref="ExternalProviderException{TErrorModel}">in case of unsuccessful response</exception>
     /// <exception cref="Exception">in case of fail in deserialize</exception>
