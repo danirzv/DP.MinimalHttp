@@ -9,7 +9,7 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="DP.MinimalHttp" Version="1.4.0" />
+        <PackageReference Include="DP.MinimalHttp" Version="1.6.0" />
         <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="9.0.4" />
     </ItemGroup>
 
