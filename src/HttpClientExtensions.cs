@@ -1,7 +1,5 @@
 ﻿using System.Net;
-using System.Net.Http.Json;
 using System.Text.Json;
-using System.Web;
 using Microsoft.Extensions.Logging;
 
 namespace MinimalHttp;
@@ -14,7 +12,7 @@ public static class HttpClientExtensions
     /// <summary>
     /// you may set it as you desire
     /// </summary>
-    public static JsonSerializerOptions JsonSerializerOptions { get; set; } = JsonSerializerOptions.Default;
+    public static JsonSerializerOptions JsonSerializerOptions { get; set; } = new (JsonSerializerDefaults.Web);
 
     /// <summary>
     /// Makes a http call and returns response

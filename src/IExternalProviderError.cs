@@ -1,6 +1,4 @@
-﻿using System.Collections.ObjectModel;
-
-namespace MinimalHttp;
+﻿namespace MinimalHttp;
 
 /// <summary>
 /// Abstraction of an External service provider's error
