@@ -1,4 +1,5 @@
 ﻿using System.Net;
+using System.Net.Http.Json;
 using System.Text.Json;
 using Microsoft.Extensions.Logging;
 
@@ -35,21 +36,18 @@ public static class HttpClientExtensions
     {
         using var result = await client.SendAsync(request, cancellationToken);
 
-        var resultContentStream = await result.Content.ReadAsStreamAsync(cancellationToken);
-
         if (!result.IsSuccessStatusCode)
         {
             logger.LogWarning("API call failed, HandlingError");
-            throw await GenerateException<TErrorModel>(resultContentStream, result.StatusCode, customJsonSerializerOptions);
+            throw await GenerateException<TErrorModel>(result, result.StatusCode, customJsonSerializerOptions);
         }
 
-        var response = await JsonSerializer.DeserializeAsync<TResponse>(resultContentStream, customJsonSerializerOptions ?? JsonSerializerOptions, cancellationToken);
+        var response = await result.Content.ReadFromJsonAsync<TResponse>(customJsonSerializerOptions ?? JsonSerializerOptions, cancellationToken: cancellationToken);
 
         if (response is null || (customSuccessfulResultIndicator != null && !customSuccessfulResultIndicator(response, result)))
         {
             logger.LogWarning("API call failed, HandlingError");
-            resultContentStream.Position = 0;
-            throw await GenerateException<TErrorModel>(resultContentStream, result.StatusCode, customJsonSerializerOptions);
+            throw await GenerateException<TErrorModel>(result, result.StatusCode, customJsonSerializerOptions);
         }
 
         return response;
@@ -74,19 +72,17 @@ public static class HttpClientExtensions
     {
         using var result = await client.SendAsync(request, cancellationToken);
 
-        var resultContentStream = await result.Content.ReadAsStreamAsync(cancellationToken);
-
         if (!result.IsSuccessStatusCode || (customSuccessfulResultIndicator != null && customSuccessfulResultIndicator(result)))
         {
             logger.LogWarning("API call failed, HandlingError");
-            throw await GenerateException<TErrorModel>(resultContentStream, result.StatusCode, customJsonSerializerOptions);
+            throw await GenerateException<TErrorModel>(result, result.StatusCode, customJsonSerializerOptions);
         }
     }
 
-    private static async Task<Exception> GenerateException<TErrorModel>(Stream resultStream, HttpStatusCode statusCode, JsonSerializerOptions? customJsonSerializerOptions = null)
+    private static async Task<Exception> GenerateException<TErrorModel>(HttpResponseMessage responseMessage, HttpStatusCode statusCode, JsonSerializerOptions? customJsonSerializerOptions = null)
         where TErrorModel : IExternalProviderError
     {
-        var error = await JsonSerializer.DeserializeAsync<TErrorModel>(resultStream, customJsonSerializerOptions ?? JsonSerializerOptions);
+        var error = await responseMessage.Content.ReadFromJsonAsync<TErrorModel>(customJsonSerializerOptions ?? JsonSerializerOptions);
         return new ExternalProviderException<TErrorModel>(
             $"{error?.GetCode() ?? "Unknown"}",
             error?.GetTitle() ?? string.Empty,
